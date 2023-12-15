@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from PIL import ImageTk,Image
+from fractions import Fraction
 
 class FirstPage:
     
@@ -12,7 +13,7 @@ class FirstPage:
 
 
         #========background image======
-        self.bg_frame= Image.open(r"C:\Users\HP\Pictures\Saved Pictures\backgroundpic.jpg")
+        self.bg_frame= Image.open(r"C:\Users\ossri\Downloads\backgroundpic.jpg")
         photo = ImageTk.PhotoImage(self.bg_frame)
         self.bg_panel = Label(self.window, image=photo)
         self.bg_panel.image = photo
@@ -27,7 +28,7 @@ class FirstPage:
         self.heading.place(x=200, y=1, width=200, height=100)
 
         #=========another image=========
-        self.side_image= Image.open(r"C:\Users\HP\Pictures\Saved Pictures\sideimage1.png")
+        self.side_image= Image.open(r"C:\Users\ossri\Downloads\sideimage1.png")
         self.resize_image = self.side_image.resize((300,300))
         photo = ImageTk.PhotoImage(self.resize_image)
         self.side_image_label = Label(self.lgn_frame, image=photo, bg='#040405')
@@ -89,7 +90,11 @@ class FirstPage:
         self.e=Entry(self.lgn_frame1, textvariable=self.entry_var, font=('yu gothic ui',20, 'bold'),width=50, bg='grey' )
         self.e.place(x=35, y=200)
 
-        
+        self.info_button=Button(self.lgn_frame1, text='NOTE',font=('yu gothic ui',12, 'bold'), command=self.open_fourth_page,cursor='hand2',bg='blue')
+        self.info_button.place(x=220, y=280, width=220, height=60)
+
+        self.info_button.bind("<Enter>", self.on_enter)
+        self.info_button.bind("<Leave>", self.on_leave)
         
         back_button=Button(self.lgn_frame1, text='Back to first page',font=('yu gothic ui',12, 'bold'), command=self.open_first_page,cursor='hand2',bg='blue')
         back_button.place(x=100, y=350, width=220, height=60)
@@ -107,6 +112,7 @@ class FirstPage:
             
 
         gratio= [l[i]/l[i-1] for i in range(2,len(l))]
+        gratio_rounded = [round(value, 1) for value in gratio]
 
          
         self.lgn_frame2 = Frame(self.window, bg='#040405', width='650', height=500)
@@ -124,14 +130,36 @@ class FirstPage:
         self.label=Label(self.lgn_frame2, text="The golden ratio is:" ,font=('yu gothic ui',20, 'bold'), bg='#040405', fg='white' )
         self.label.place(x=8, y=225, width=289, height=35)
 
-        self.label=Label(self.lgn_frame2, text=gratio[0:7] ,font=('yu gothic ui',15, 'bold'), bg='#040405', fg='#FFEB3B' )
+        self.label=Label(self.lgn_frame2, text=gratio_rounded[0:7] ,font=('yu gothic ui',15, 'bold'), bg='#040405', fg='#FFEB3B' )
         self.label.place(x=10, y=260, width=650, height=25)
-        self.label=Label(self.lgn_frame2, text=gratio[7:10] ,font=('yu gothic ui',15, 'bold'), bg='#040405', fg='#FFEB3B' )
+        self.label=Label(self.lgn_frame2, text=gratio_rounded[7:10] ,font=('yu gothic ui',15, 'bold'), bg='#040405', fg='#FFEB3B' )
         self.label.place(x=10, y=300, width=650, height=25)
 
         back_button=Button(self.lgn_frame2, text='Back to second page',font=('yu gothic ui',12, 'bold'), command=self.open_second_page, cursor='hand2',bg='blue')
         back_button.place(x=100, y=380, width=220, height=60)
 
+    def open_fourth_page(self):
+        
+        self.lgn_frame1 = Frame(self.window, bg='#040405', width='650', height=500)
+        self.lgn_frame1.place(x=700 , y=100)
+
+        self.label=Label(self.lgn_frame1, text='Golden Ratio is the ratio of consecutive Fibonacci numbers.\nThe approximate value of golden ratio is 1.618033\nIts mathematical representation is:',font=('yu gothic ui',16, 'bold'), bg='#040405', fg='yellow' , justify='left')
+        self.label.place(x=10, y=65, width=570, height=150)
+
+        self.label=Label(self.lgn_frame1, text=' a+b/b = a/b\nThe relationship between the two quantities a and b\n is such that the ratio of a and b to b is equal to \nthe ratio of a to b',font=('yu gothic ui',16, 'bold'), bg='#040405', fg='yellow' )
+        self.label.place(x=10, y=185, width=570, height=150)
+
+        back_button=Button(self.lgn_frame1, text='Back to second page',font=('yu gothic ui',12, 'bold'), command=self.open_second_page, cursor='hand2',bg='blue')
+        back_button.place(x=100, y=380, width=220, height=60)
+
+
+    def on_enter(self, event):
+        # Change button background color when the mouse enters
+        self.info_button.config(bg='yellow')
+
+    def on_leave(self, event):
+        # Change button background color when the mouse leaves
+        self.info_button.config(bg='blue')
 
     
         
